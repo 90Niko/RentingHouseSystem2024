@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using RentingHouseSystem.Data;
+using RentingHouseSystem;
 
 namespace RentingHouseSystem
 {
