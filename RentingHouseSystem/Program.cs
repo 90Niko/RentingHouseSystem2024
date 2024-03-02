@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using RentingHouseSystem;
+using RentingHouseSystem.Core.Contracts.Agent;
 using RentingHouseSystem.Core.Contracts.House;
+using RentingHouseSystem.Core.Services.Agent;
 using RentingHouseSystem.Core.Services.House;
 using RentingHouseSystem.Infrastructure.Data.Comman;
 
@@ -25,6 +26,7 @@ namespace RentingHouseSystem
 
             builder.Services.AddScoped<IHouseService, HouseService>();
             builder.Services.AddScoped<IRepository, Repository>();
+            builder.Services.AddScoped<IAgentService, AgentService>();
 
             var app = builder.Build();
 
