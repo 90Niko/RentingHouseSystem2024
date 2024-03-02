@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RentingHouseSystem;
+using RentingHouseSystem.Core.Contracts.House;
+using RentingHouseSystem.Core.Services.House;
+using RentingHouseSystem.Infrastructure.Data.Comman;
 
 namespace RentingHouseSystem
 {
@@ -19,6 +22,9 @@ namespace RentingHouseSystem
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IHouseService, HouseService>();
+            builder.Services.AddScoped<IRepository, Repository>();
 
             var app = builder.Build();
 
