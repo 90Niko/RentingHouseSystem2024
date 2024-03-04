@@ -8,5 +8,6 @@ namespace RentingHouseSystem.Core.Models.Agent
 {
     public class BecomeAgentFormModel
     {
+        public string PhoneNumber { get; set; } = string.Empty;
     }
 }

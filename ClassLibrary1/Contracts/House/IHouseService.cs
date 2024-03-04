@@ -1,4 +1,4 @@
-﻿using RentingHouseSystem.Core.Models;
+﻿using RentingHouseSystem.Core.Models.House;
 using System;
 using System.Collections.Generic;
 using System.Linq;

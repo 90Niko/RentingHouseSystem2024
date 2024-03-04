@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RentingHouseSystem.Core.Contracts;
 using RentingHouseSystem.Core.Contracts.Agent;
 using RentingHouseSystem.Core.Models.Agent;
+using RentingHouseSystem.Extensions;
 using System.Security.Claims;
 using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -21,14 +23,14 @@ namespace RentingHouseSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Become()
         {
-            if (await agentService.ExistByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)))
+            if (await agentService.ExistByIdAsync(User.Id()))
             {
                 return BadRequest("You are already an agent");
             }
 
             var model = new BecomeAgentFormModel
             {
-                PhoneNumber = await agentService.UserWithPhoneNumberAsync(User.FindFirstValue(ClaimTypes.MobilePhone))
+                PhoneNumber = User.FindFirstValue(ClaimTypes.MobilePhone)
             };
 
             return View(model);

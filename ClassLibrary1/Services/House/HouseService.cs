@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentingHouseSystem.Core.Contracts.House;
-using RentingHouseSystem.Core.Models;
+using RentingHouseSystem.Core.Models.House;
 using RentingHouseSystem.Infrastructure.Data.Comman;
 
 namespace RentingHouseSystem.Core.Services.House
