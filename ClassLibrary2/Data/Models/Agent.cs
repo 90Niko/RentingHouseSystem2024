@@ -6,6 +6,7 @@ using static RentingHouseSystem.Infrastructure.Constants.DataConstants;
 
 namespace RentingHouseSystem.Infrastructure.Data.Models
 {
+    [Index(nameof(PhoneNumber), IsUnique = true)]
     [Comment("House Agent")]
     public class Agent
     {
