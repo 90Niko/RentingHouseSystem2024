@@ -31,5 +31,15 @@ namespace RentingHouseSystem.Infrastructure.Data.Comman
         {
             return DbSet<T>();
         }
+
+        public async Task AddAsync<T>(T entity) where T : class
+        {
+            await DbSet<T>().AddAsync(entity);
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await context.SaveChangesAsync();
+        }
     }
 }
