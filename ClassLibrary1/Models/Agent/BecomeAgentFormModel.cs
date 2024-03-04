@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using static RentingHouseSystem.Core.Constants.MessageConstants;
+using static RentingHouseSystem.Infrastructure.Constants.DataConstants; 
 
 namespace RentingHouseSystem.Core.Models.Agent
 {
     public class BecomeAgentFormModel
     {
+        [Required(ErrorMessage = RequiredMessage)]
+        [StringLength(AgentPhoneMaxLength, MinimumLength = AgentPhoneMinLength, ErrorMessage = LengthMessage)]
+        [Display(Name = "Phone Number")]
+        [Phone(ErrorMessage = "The {0} field is not a valid phone number.")]
         public string PhoneNumber { get; set; } = string.Empty;
     }
 }

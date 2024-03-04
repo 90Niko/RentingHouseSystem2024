@@ -2,7 +2,6 @@
 using RentingHouseSystem.Core.Contracts.Agent;
 using RentingHouseSystem.Infrastructure.Data.Comman;
 using RentingHouseSystem.Core.Models;
-using RentingHouseSystem.Infrastructure.Data.Models.House;
 using System.Reflection.Metadata.Ecma335;
 
 namespace RentingHouseSystem.Core.Services.Agent

@@ -28,11 +28,8 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest("You are already an agent");
             }
 
-            var model = new BecomeAgentFormModel
-            {
-                PhoneNumber = User.FindFirstValue(ClaimTypes.MobilePhone)
-            };
-
+            var model = new BecomeAgentFormModel();
+           
             return View(model);
         }
         [HttpPost]
