@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RentingHouseSystem.Core.Contracts.Agent;
+using RentingHouseSystem.Core.Models.Agent;
 using System.Security.Claims;
 using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -42,6 +43,7 @@ namespace RentingHouseSystem.Controllers
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
 
     }
 }
