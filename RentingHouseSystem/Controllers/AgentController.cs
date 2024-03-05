@@ -39,7 +39,7 @@ namespace RentingHouseSystem.Controllers
                 return View(model);
             }
 
-            if (await agentService.UserHasRentsAsync(User.Id()))
+            if (await agentService.UserHasRentsAsync(model.PhoneNumber))
             {
                 ModelState.AddModelError(nameof(model.PhoneNumber), "You have rents and cannot become an agent");
             }
