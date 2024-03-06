@@ -49,11 +49,10 @@ namespace RentingHouseSystem.Controllers
                 ModelState.AddModelError("Error", "You are already an agent");
             }
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
 
             await agentService.CreateAsync(User.Id(), model.PhoneNumber);
+
+            return RedirectToAction(nameof(HomeController), "Home");
         }
-
-
     }
 }
