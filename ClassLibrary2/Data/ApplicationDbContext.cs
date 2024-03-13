@@ -14,7 +14,6 @@ namespace RentingHouseSystem
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            
             builder.Entity<House>()
                 .HasOne(h => h.Category)
                 .WithMany(c => c.Houses)

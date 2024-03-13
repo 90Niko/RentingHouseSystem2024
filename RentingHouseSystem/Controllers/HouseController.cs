@@ -24,11 +24,20 @@ namespace RentingHouseSystem.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllHousesQueryModel query)
         {
-            var model = new AllHousesQueryModel();
+            var model = await houseService.AllAsync(
+                   query.Category,
+                   query.SearchTerm,
+                   query.Sorting,
+                   query.CurrentPage,
+                   AllHousesQueryModel.HousesPerPage);
 
-            return View(model);
+            query.TotalHousesCount = model.totalHousesCount;
+            query.Houses = model.Houses;
+            query.Categories = await houseService.AllCategoryNamesAsync();
+
+            return View(query);
         }
 
         [HttpGet]
@@ -83,7 +92,7 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(Details), new { id = houseId });
+            return RedirectToAction(nameof(Mine), new { id = houseId });
         }
 
         [HttpGet]
