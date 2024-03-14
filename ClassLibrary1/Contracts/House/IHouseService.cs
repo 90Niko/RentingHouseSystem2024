@@ -17,7 +17,7 @@ namespace RentingHouseSystem.Core.Contracts.House
         Task<bool> CategoryExistAsync(int categoryId);
 
         Task<int> CreateAsync(HouseFormModel model, int agentId);
-
+        
         Task<HouseQueryServiceModel> AllAsync(
             string? category = null,
             string? searchTerm = null,
@@ -26,6 +26,15 @@ namespace RentingHouseSystem.Core.Contracts.House
             int housesPerPage =1);
 
         Task<IEnumerable<string>> AllCategoryNamesAsync();
+
+        Task<IEnumerable<HouseServiceModel>> AllHousesByAgentIdAsync(int agentId);
+
+        Task<IEnumerable<HouseServiceModel>> AllHousesByUserIdAsync(string userId);
+
+        Task<bool> ExistAsync(int id);
+
+        Task<HouseDetailsServiceModel> HouseDetailsByIdAsync(int id);
+
 
     }
 }

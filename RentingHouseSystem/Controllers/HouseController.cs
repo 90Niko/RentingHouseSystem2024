@@ -32,8 +32,9 @@ namespace RentingHouseSystem.Controllers
                    query.Sorting,
                    query.CurrentPage,
                    AllHousesQueryModel.HousesPerPage);
+            
 
-            query.TotalHousesCount = model.totalHousesCount;
+            query.TotalHousesCount = model.TotalHousesCount;
             query.Houses = model.Houses;
             query.Categories = await houseService.AllCategoryNamesAsync();
 
@@ -43,15 +44,33 @@ namespace RentingHouseSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
-            var model = new AllHousesQueryModel();
+            var userId = User.Id();
+
+            IEnumerable<HouseServiceModel> model = new List<HouseServiceModel>();
+
+            if (await agentService.ExistByIdAsync(userId))
+            {
+                int agentId = await agentService.GetIdByAgentIdAsync(userId);
+
+                model = await houseService.AllHousesByAgentIdAsync(agentId);
+            }
+            else
+            {
+                model = await houseService.AllHousesByUserIdAsync(userId);
+            }
 
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(int id)
         {
-            var model = new HouseDetailsViewModel();
+            if (!await houseService.ExistAsync(id))
+            {
+                return BadRequest();
+            }
+
+            var model = await houseService.HouseDetailsByIdAsync(id);
 
             return View(model);
         }
@@ -84,7 +103,7 @@ namespace RentingHouseSystem.Controllers
                 return View(model);
             }
 
-            int? agentId = await agentService.GetIdByUserIdAsync(User.Id());
+            int? agentId = await agentService.GetIdByAgentIdAsync(User.Id());
             int? houseId = await houseService.CreateAsync(model, agentId.Value);
 
             if (agentId == null)

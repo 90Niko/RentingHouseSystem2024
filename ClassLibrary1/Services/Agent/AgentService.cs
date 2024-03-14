@@ -32,7 +32,7 @@ namespace RentingHouseSystem.Core.Services.Agent
                  .AnyAsync(x => x.UserId == userId);
         }
 
-        public async Task<int> GetIdByUserIdAsync(string userId)
+        public async Task<int> GetIdByAgentIdAsync(string userId)
         {
            return await repository.AllReadOnly<Infrastructure.Data.Models.Agent>()
                 .Where(x => x.UserId == userId)

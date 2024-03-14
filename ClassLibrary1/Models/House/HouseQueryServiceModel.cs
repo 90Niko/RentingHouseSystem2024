@@ -2,8 +2,8 @@
 {
     public class HouseQueryServiceModel
     {
-        public int totalHousesCount { get; set; }
+        public int TotalHousesCount { get; set; }
 
-        public IEnumerable<HouseServiceModel> Houses { get; set; }= new List<HouseServiceModel>();
+        public IEnumerable<HouseServiceModel> Houses { get; set; }=null!;
     }
 }
