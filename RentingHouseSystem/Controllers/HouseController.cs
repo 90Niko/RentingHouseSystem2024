@@ -32,7 +32,7 @@ namespace RentingHouseSystem.Controllers
                    query.Sorting,
                    query.CurrentPage,
                    AllHousesQueryModel.HousesPerPage);
-            
+
 
             query.TotalHousesCount = model.TotalHousesCount;
             query.Houses = model.Houses;
@@ -117,7 +117,17 @@ namespace RentingHouseSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new HouseFormModel();
+            if (!await houseService.ExistAsync(id))
+            {
+                return BadRequest();
+            }
+
+            if (!await houseService.HasAgentWithIdAsync(id, User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            var model = await houseService.GetHouseFormModelByIdAsync(id);
 
             return View(model);
         }
@@ -125,7 +135,31 @@ namespace RentingHouseSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, HouseFormModel model)
         {
-            return RedirectToAction(nameof(Details), new { id = 1 });
+            if (!await houseService.ExistAsync(id))
+            {
+                return BadRequest();
+            }
+
+            if (!await houseService.HasAgentWithIdAsync(id, User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            if (!await houseService.CategoryExistAsync(model.CategoryId))
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await houseService.AllCategoriesAsync();
+
+                return View(model);
+            }
+
+            await houseService.EditAsync(id, model);
+
+            return RedirectToAction(nameof(Details), new { id });
         }
         [HttpGet]
         public async Task<IActionResult> Delete(int id)

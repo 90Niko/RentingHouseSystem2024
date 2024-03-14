@@ -47,7 +47,7 @@ namespace RentingHouseSystem.Core.Services.House
                 .OrderByDescending(x => x.Id)
             };
 
-            var houses = housesQuery
+            var houses = await housesQuery
                 .Skip((currentPage - 1) * housesPerPage)
                 .Take(housesPerPage)
                 .Select(x => new HouseServiceModel
@@ -65,7 +65,7 @@ namespace RentingHouseSystem.Core.Services.House
             HouseQueryServiceModel model = new HouseQueryServiceModel
             {
                 TotalHousesCount = totalHouses,
-                Houses = await houses
+                Houses = houses
             };
 
             return Task.FromResult(model).Result;
@@ -149,10 +149,57 @@ namespace RentingHouseSystem.Core.Services.House
 
         }
 
+        public async Task EditAsync(int houseId, HouseFormModel model)
+        {
+            var house = await repository.GetByIdAsync<Infrastructure.Data.Models.House>(houseId);
+
+            if (house != null)
+            {
+                return;
+                house.Address = model.Address;
+                house.CategoryId = model.CategoryId;
+                house.Description = model.Description;
+                house.ImageUrl = model.ImageUrl;
+                house.PricePerMonth = model.PricePerMonth;
+                house.Title = model.Title;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
         public async Task<bool> ExistAsync(int id)
         {
             return await repository.AllReadOnly<Infrastructure.Data.Models.House>()
                  .AnyAsync(x => x.Id == id);
+        }
+
+        public async Task<HouseFormModel?> GetHouseFormModelByIdAsync(int id)
+        {
+            var house = await repository.AllReadOnly<Infrastructure.Data.Models.House>()
+                  .Where(x => x.Id == id)
+                  .Select(x => new HouseFormModel
+                  {
+                      Address = x.Address,
+                      CategoryId = x.CategoryId,
+                      Description = x.Description,
+                      ImageUrl = x.ImageUrl,
+                      PricePerMonth = x.PricePerMonth,
+                      Title = x.Title
+                  }).FirstOrDefaultAsync();
+
+
+            if (house != null)
+            {
+                house.Categories = await AllCategoriesAsync();
+            }
+
+            return house;
+        }
+
+        public async Task<bool> HasAgentWithIdAsync(int houseId, string userId)
+        {
+            return await repository.AllReadOnly<Infrastructure.Data.Models.House>()
+                 .AnyAsync(x => x.Id == houseId && x.Agent.UserId == userId);
         }
 
         public async Task<HouseDetailsServiceModel> HouseDetailsByIdAsync(int id)
@@ -168,7 +215,7 @@ namespace RentingHouseSystem.Core.Services.House
                          Email = x.Agent.User.Email,
                          PhoneNumber = x.Agent.PhoneNumber
                      },
-                     Category= x.Category.Name,
+                     Category = x.Category.Name,
                      Description = x.Description,
                      ImageUrl = x.ImageUrl,
                      IsRented = x.RenterId != null,
