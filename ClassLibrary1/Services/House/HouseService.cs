@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentingHouseSystem.Core.Contracts.House;
 using RentingHouseSystem.Core.Enumaration;
+using RentingHouseSystem.Core.Exceptions;
 using RentingHouseSystem.Core.Models.House;
 using RentingHouseSystem.Infrastructure.Data.Comman;
 using RentingHouseSystem.Infrastructure.Data.Models;
@@ -149,6 +150,12 @@ namespace RentingHouseSystem.Core.Services.House
 
         }
 
+        public async Task DeleteAsync(int houseId)
+        {
+            await repository.DeleteAsync<Infrastructure.Data.Models.House>(houseId);
+            await repository.SaveChangesAsync();
+        }
+
         public async Task EditAsync(int houseId, HouseFormModel model)
         {
             var house = await repository.GetByIdAsync<Infrastructure.Data.Models.House>(houseId);
@@ -224,6 +231,34 @@ namespace RentingHouseSystem.Core.Services.House
                  }).FirstAsync();
         }
 
+        public async Task<bool> IsRentedAsync(int houseId)
+        {
+            bool result = false;
+
+            var house = await repository.GetByIdAsync<Infrastructure.Data.Models.House>(houseId);
+            
+            if (house != null)
+            {
+                result = house.RenterId != null;
+            }
+
+            return result;
+        }
+
+        public async Task<bool> IsRentedByUserWithIdAsync(int houseId, string userId)
+        {
+            bool result = false;
+
+            var house = await repository.GetByIdAsync<Infrastructure.Data.Models.House>(houseId);
+
+            if (house != null)
+            {
+                result = house.RenterId==userId;
+            }
+
+            return result;
+        }
+
         public async Task<IEnumerable<HouseIndexServiceModel>> LastThreedHouseAsync()
         {
             return await repository.AllReadOnly<Infrastructure.Data.Models.House>()
@@ -235,6 +270,33 @@ namespace RentingHouseSystem.Core.Services.House
                     Title = x.Title,
                     ImageUrl = x.ImageUrl
                 }).ToListAsync();
+        }
+
+        public async Task LeaveAsync(int houseId,string userId)
+        {
+          var house = await repository.GetByIdAsync<Infrastructure.Data.Models.House>(houseId);
+
+            if (house != null)
+            {
+                if (house.RenterId != userId)
+                {
+                    throw new UnauthorizedException("The user is not the renter");
+                }
+
+                house.RenterId = null;
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task RentAsync(int id, string userId)
+        {
+            var house = await repository.GetByIdAsync<Infrastructure.Data.Models.House>(id);
+
+            if (house != null)
+            {
+                house.RenterId = userId;
+                await repository.SaveChangesAsync();
+            }
         }
 
         private List<HouseServiceModel> ProjectTo(List<Infrastructure.Data.Models.House> houses)
