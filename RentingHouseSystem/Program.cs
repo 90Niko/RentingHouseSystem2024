@@ -33,8 +33,9 @@ namespace RentingHouseSystem
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
             })
-
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddControllersWithViews(options =>
@@ -83,6 +84,8 @@ namespace RentingHouseSystem
 
             });
            
+            await app.CreateAdminRoleAsync();
+
             await app.RunAsync();
         }
     }

@@ -14,7 +14,11 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
 
         public AplicationUser GuestUser { get; set; }
 
+        public AplicationUser AdminUser { get; set; }
+
         public Agent Agent { get; set; }
+
+        public Agent AdminAgent { get; set; }
 
         public Category CottageCategory { get; set; }
 
@@ -46,7 +50,9 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
                 UserName = "agent@mail.com",
                 NormalizedUserName = "agent@mail.com",
                 Email = "agent@mail.com",
-                NormalizedEmail = "agent@mail.com"
+                NormalizedEmail = "agent@mail.com",
+                FirstName="Agent",
+                LastName="Agentov"
             };
 
             AgentUser.PasswordHash =
@@ -58,11 +64,26 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
                 UserName = "guest@mail.com",
                 NormalizedUserName = "guest@mail.com",
                 Email = "guest@mail.com",
-                NormalizedEmail = "guest@mail.com"
+                NormalizedEmail = "guest@mail.com",
+                FirstName = "Guest",
+                LastName = "Guestov"
+            };
+            GuestUser.PasswordHash =
+           hasher.HashPassword(AgentUser, "guest123");
+
+            AdminUser = new AplicationUser()
+            {
+                Id = "f5563c5e-d780-4bce-812d-408f2c079ae2",
+                UserName = "admin@mail.com",
+                NormalizedUserName = "admin@mail.com",
+                Email = "admin@mail.com",
+                NormalizedEmail = "admin@mail.com",
+                FirstName = "Great",
+                LastName = "Admin"
             };
 
-            GuestUser.PasswordHash =
-            hasher.HashPassword(AgentUser, "guest123");
+            AdminUser.PasswordHash =
+            hasher.HashPassword(AdminUser, "admin123");
         }
 
         private void SeedAgent()
@@ -72,6 +93,13 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
                 Id = 1,
                 PhoneNumber = "+359888888888",
                 UserId = AgentUser.Id
+            };
+
+            AdminAgent = new Agent()
+            {
+                Id = 3,
+                PhoneNumber = "+359888888887",
+                UserId = AdminUser.Id
             };
         }
 

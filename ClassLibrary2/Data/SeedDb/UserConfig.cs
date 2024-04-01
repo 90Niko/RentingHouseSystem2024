@@ -11,7 +11,7 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
         {
             var data = new SeedData();
 
-            builder.HasData(new AplicationUser[] { data.AgentUser, data.GuestUser });
+            builder.HasData(new AplicationUser[] { data.AgentUser, data.GuestUser ,data.AdminUser});
         }
     }
 }

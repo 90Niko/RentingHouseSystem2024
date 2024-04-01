@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentingHouseSystem;
 
@@ -11,9 +12,10 @@ using RentingHouseSystem;
 namespace RentingHouseSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240401173453_AdminAdded")]
+    partial class AdminAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,7 +286,7 @@ namespace RentingHouseSystem.Infrastructure.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c409eb40-a296-44a0-9746-b50ca6579c78",
+                            ConcurrencyStamp = "3f6d8099-eb7f-4175-8153-c661fde2546b",
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Agent",
@@ -292,9 +294,9 @@ namespace RentingHouseSystem.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAENOt4Dh6KIrHLiDuRPhNm7o/bW0pIYFgrzM86I/tH08/YARgWgkNjDm+RBfBdAvohQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAmONSRbolkwHPku0BCHZIMscuMFj1zVFiDoWRcJ3Lgo8Gf6Cg8kb+CTOR5Ya1bchQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "354843f9-b4ec-44ce-bc9a-086192540f21",
+                            SecurityStamp = "d599018a-ba9e-4e0e-91b5-da0ec34f1f7e",
                             TwoFactorEnabled = false,
                             UserName = "agent@mail.com"
                         },
@@ -302,7 +304,7 @@ namespace RentingHouseSystem.Infrastructure.Migrations
                         {
                             Id = "6d5800ce-d726-4fc8-83d9-d6b3ac1f591e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d3eb20af-4d4c-4f06-80ea-310e54b75743",
+                            ConcurrencyStamp = "8e0d6de0-beec-4d4a-aad0-c6a114cecfae",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Guest",
@@ -310,9 +312,9 @@ namespace RentingHouseSystem.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHTSZ3kCQ4CwLUceNKaO+ylA2lhb+kga2goTkdfjppjx8icNVl3Lf4Vru8hotJQwng==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAZmwcz4F3Cy+mUY1Eo3RlYFJ6RdhgppJtoGycfJfxoai5KPt57akbZO3eRuTQ4ImQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "efd71f46-bfbf-46ed-a8dc-2a87107de5ad",
+                            SecurityStamp = "632b590e-ffd1-4f47-b3f0-26e94e945224",
                             TwoFactorEnabled = false,
                             UserName = "guest@mail.com"
                         },
@@ -320,7 +322,7 @@ namespace RentingHouseSystem.Infrastructure.Migrations
                         {
                             Id = "f5563c5e-d780-4bce-812d-408f2c079ae2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dfd26e22-d4fa-456b-a783-a3028db91d8f",
+                            ConcurrencyStamp = "b4da10f9-4c7a-4f75-bb58-cf724d69c9c7",
                             Email = "admin@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Great",
@@ -328,9 +330,8 @@ namespace RentingHouseSystem.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@mail.com",
                             NormalizedUserName = "admin@mail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN/tMg8fkgJoPaPW7U5e3DJPAhPhu0KwP4jhQ+De3YwAdTDzt2Ig18HFew7Q09b+vA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6b2c1f81-b8dd-419f-9c91-03d8f2b9005a",
+                            SecurityStamp = "a096ea62-efe9-4f00-92dd-6eb25e1086f6",
                             TwoFactorEnabled = false,
                             UserName = "admin@mail.com"
                         });
