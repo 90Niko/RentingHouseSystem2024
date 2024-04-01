@@ -67,7 +67,7 @@ namespace RentingHouseSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id,string information)
+        public async Task<IActionResult> Details(int id, string information)
         {
             if (!await houseService.ExistAsync(id))
             {
@@ -77,7 +77,7 @@ namespace RentingHouseSystem.Controllers
 
             var model = await houseService.HouseDetailsByIdAsync(id);
 
-            if(information!=model.GetInformation())
+            if (information != model.GetInformation())
             {
                 return BadRequest();
             }
@@ -121,7 +121,7 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(Details), new { id = houseId,information=model.GetInformation()});
+            return RedirectToAction(nameof(Details), new { id = houseId, information = model.GetInformation() });
         }
 
         [HttpGet]
@@ -132,7 +132,7 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            if (!await houseService.HasAgentWithIdAsync(id, User.Id()))
+            if (await houseService.HasAgentWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -149,12 +149,10 @@ namespace RentingHouseSystem.Controllers
             {
                 return BadRequest();
             }
-
-            if (!await houseService.HasAgentWithIdAsync(id, User.Id()))
+            if (await houseService.HasAgentWithIdAsync(id, User.Id()) == false && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
-
             if (!await houseService.CategoryExistAsync(model.CategoryId))
             {
                 ModelState.AddModelError(nameof(model.CategoryId), "Category does not exist");
@@ -180,7 +178,7 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            if (!await houseService.HasAgentWithIdAsync(id, User.Id()))
+            if (await houseService.HasAgentWithIdAsync(id, User.Id()) && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -207,7 +205,7 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            if (!await houseService.HasAgentWithIdAsync(model.Id, User.Id()))
+            if (await houseService.HasAgentWithIdAsync(id, User.Id()) && User.IsAdmin() == false)
             {
                 return Unauthorized();
             }
@@ -225,7 +223,7 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            if (await agentService.ExistByIdAsync(User.Id()))
+            if (await agentService.ExistByIdAsync(User.Id()) && User.IsAdmin() == false)
             {
                 return BadRequest();
             }
@@ -247,12 +245,12 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            if (await houseService.IsRentedByUserWithIdAsync(id,User.Id())==false)
+            if (await houseService.IsRentedByUserWithIdAsync(id, User.Id()) == false)
             {
                 return Unauthorized();
             }
 
-            await houseService.LeaveAsync(id,User.Id());
+            await houseService.LeaveAsync(id, User.Id());
 
             return RedirectToAction(nameof(All));
         }
