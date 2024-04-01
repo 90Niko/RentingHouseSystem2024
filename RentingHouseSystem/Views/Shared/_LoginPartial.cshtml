@@ -2,6 +2,7 @@
 @using RentingHouseSystem.Core.Contracts.Agent
 @using RentingHouseSystem.Extensions
 @using RentingHouseSystem.Infrastructure.Data.Models
+@using System.Security.Claims
 @inject SignInManager<AplicationUser> SignInManager
 @inject UserManager<AplicationUser> UserManager
 @inject IAgentService agentService
@@ -11,11 +12,8 @@
 
     if (SignInManager.IsSignedIn(User))
     {
-        var user = await UserManager.FindByIdAsync(User.Id());
-
-        userName = $"{user.FirstName} {user.LastName}";
-       
-    } 
+        userName = User.FindFirstValue(RentingHouseSystem.Core.Constants.CustomClaims.UserFullNameClaim)??string.Empty;
+    }
 }
 
 <ul class="navbar-nav">
