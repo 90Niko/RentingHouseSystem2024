@@ -8,6 +8,7 @@ using RentingHouseSystem.Core.Services.House;
 using RentingHouseSystem.Infrastructure.Data.Comman;
 using RentingHouseSystem.Infrastructure.Data.Models;
 using RentingHouseSystem.ModelBinders;
+using RentingHouseSystem;
 
 namespace RentingHouseSystem
 {
