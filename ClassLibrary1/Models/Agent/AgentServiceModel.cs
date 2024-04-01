@@ -7,6 +7,9 @@ namespace RentingHouseSystem.Core.Models.Agent
 {
     public class AgentServiceModel
     {
+        [Display(Name = "Full Name")]
+        public string FullName { get; set; } = null!;
+
         [Required(ErrorMessage = RequiredMessage)]
         [StringLength(AgentPhoneMaxLength, MinimumLength = AgentPhoneMinLength, ErrorMessage = LengthMessage)]
         [Display(Name = "Phone Number")]
