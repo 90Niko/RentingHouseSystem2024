@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using RentingHouseSystem.Attributes;
 using RentingHouseSystem.Core.Contracts.Agent;
 using RentingHouseSystem.Core.Contracts.House;
+using RentingHouseSystem.Core.Extensions;
 using RentingHouseSystem.Core.Models.House;
 using RentingHouseSystem.Extensions;
 using System.Web.Http;
@@ -65,14 +67,20 @@ namespace RentingHouseSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id,string information)
         {
             if (!await houseService.ExistAsync(id))
             {
                 return BadRequest();
             }
 
+
             var model = await houseService.HouseDetailsByIdAsync(id);
+
+            if(information!=model.GetInformation())
+            {
+                return BadRequest();
+            }
 
             return View(model);
         }
@@ -113,7 +121,7 @@ namespace RentingHouseSystem.Controllers
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(Mine), new { id = houseId });
+            return RedirectToAction(nameof(Details), new { id = houseId,information=model.GetInformation()});
         }
 
         [HttpGet]
@@ -161,7 +169,7 @@ namespace RentingHouseSystem.Controllers
 
             await houseService.EditAsync(id, model);
 
-            return RedirectToAction(nameof(Details), new { id });
+            return RedirectToAction(nameof(Details), new { id, information = model.GetInformation() });
         }
         [HttpGet]
         public async Task<IActionResult> Delete(int id)

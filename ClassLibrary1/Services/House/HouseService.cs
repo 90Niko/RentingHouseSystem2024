@@ -267,6 +267,7 @@ namespace RentingHouseSystem.Core.Services.House
                 .Select(x => new HouseIndexServiceModel
                 {
                     Id = x.Id,
+                    Address = x.Address,
                     Title = x.Title,
                     ImageUrl = x.ImageUrl
                 }).ToListAsync();

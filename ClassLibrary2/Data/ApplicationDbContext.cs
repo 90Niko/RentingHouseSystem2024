@@ -5,7 +5,7 @@ using RentingHouseSystem.Infrastructure.Data.SeedDb;
 
 namespace RentingHouseSystem
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

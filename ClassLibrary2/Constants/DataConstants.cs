@@ -30,5 +30,13 @@ namespace RentingHouseSystem.Infrastructure.Constants
 
         public const int AgentPhoneMinLength = 7;
 
+        public const int UserFirstNameMaxLength = 12;
+
+        public const int UserFirstNameMinLength = 2;
+
+        public const int UserLastNameMaxLength = 15;
+
+        public const int UserLastNameMinLength = 3;
+
     }
 }
