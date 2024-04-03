@@ -26,17 +26,14 @@
             <p> Price Per Month: <b>@String.Format("{0:f2}", Model.PricePerMonth) BGN</b> </p>
             <p>@Model.Description</p>
             <p>Category: <b>@Model.Category</b></p> <p><i>(@(Model.IsRented ? "Rented" : "Not Rented"))</i></p> <div class="form-inline">
-                @if (this.User.Identity.IsAuthenticated)
+                @if (User.Identity.IsAuthenticated)
                 {
-                    if (await houses.HasAgentWithIdAsync(Model.Id, User.Id())
-                    || User.IsAdmin())
-                    {
+                   
                         <a asp-controller="House" asp-action="Edit" asp-route-id="@Model.Id"
                            class="btn btn-warning">Edit</a>
                         <a asp-controller="House" asp-action="Delete" asp-route-id="@Model.Id"
                            class="btn btn-danger">Delete</a>
-                    }
-
+                    
                     <p></p>
                     @if (!Model.IsRented && ((await agents.ExistByIdAsync(User.Id())) == false || User.IsAdmin()))
                     {

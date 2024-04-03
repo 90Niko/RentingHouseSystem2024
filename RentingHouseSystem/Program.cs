@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -77,13 +78,18 @@ namespace RentingHouseSystem
                 endpoints.MapControllerRoute(
                        name: "House Details",
                        pattern: "/House/Details/{id}/{information}",
-                       defaults: new {Controller="House",Action="Details"}
-                       );
+                       defaults: new { Controller = "House", Action = "Details" }
+                );
+                
+                endpoints.MapControllerRoute(
+                      name: "areas",
+                      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
-
             });
-           
+
             await app.CreateAdminRoleAsync();
 
             await app.RunAsync();

@@ -15,18 +15,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using RentingHouseSystem.Infrastructure.Data.Models;
+using static RentingHouseSystem.Core.Constants.RoleConstants;
 
 namespace RentingHouseSystem.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<AplicationUser> _signInManager;
+        private readonly UserManager<AplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public LoginModel(SignInManager<AplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<AplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<AplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -115,7 +120,14 @@ namespace RentingHouseSystem.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
                     _logger.LogInformation("User logged in.");
+
+                    if (await _userManager.IsInRoleAsync(user,AdminRole))
+                    {
+                        return RedirectToAction("Dashboard","Home",new {area="Admin"});
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
