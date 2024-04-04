@@ -14,7 +14,7 @@ namespace RentingHouseSystem.Core.Services.Agent
         {
             repository = _repository;
         }
- 
+
         public async Task CreateAsync(string userId, string phoneNumber)
         {
             await repository.AddAsync(new Infrastructure.Data.Models.Agent
@@ -32,12 +32,18 @@ namespace RentingHouseSystem.Core.Services.Agent
                  .AnyAsync(x => x.UserId == userId);
         }
 
+        public async Task<int?> GetAgentIdAsync(string userId)
+        {
+            return (await repository.AllReadOnly<Infrastructure.Data.Models.Agent>()
+                .FirstOrDefaultAsync(x => x.UserId == userId))?.Id;
+        }
+
         public async Task<int> GetIdByAgentIdAsync(string userId)
         {
-           return await repository.AllReadOnly<Infrastructure.Data.Models.Agent>()
-                .Where(x => x.UserId == userId)
-                .Select(x => x.Id)
-                .FirstOrDefaultAsync();
+            return await repository.AllReadOnly<Infrastructure.Data.Models.Agent>()
+                 .Where(x => x.UserId == userId)
+                 .Select(x => x.Id)
+                 .FirstOrDefaultAsync();
         }
 
         public async Task<bool> UserHasRentsAsync(string userId)

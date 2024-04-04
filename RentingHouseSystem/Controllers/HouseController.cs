@@ -52,9 +52,14 @@ namespace RentingHouseSystem.Controllers
 
             IEnumerable<HouseServiceModel> model = new List<HouseServiceModel>();
 
+            if (User.IsAdmin())
+            {
+                return RedirectToAction("Mine", "House", new { area = "Admin" });
+            }
+
             if (await agentService.ExistByIdAsync(userId))
             {
-                int agentId = await agentService.GetIdByAgentIdAsync(userId);
+                int agentId = await agentService.GetAgentIdAsync(userId) ?? 0;
 
                 model = await houseService.AllHousesByAgentIdAsync(agentId);
             }

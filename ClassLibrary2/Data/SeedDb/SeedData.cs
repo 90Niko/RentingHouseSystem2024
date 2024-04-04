@@ -5,16 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RentingHouseSystem.Infrastructure.Constants.CustomClaims;
 
 namespace RentingHouseSystem.Infrastructure.Data.SeedDb
 {
     internal class SeedData
     {
         public AplicationUser AgentUser { get; set; }
+        public IdentityUserClaim<string> AgentUserClaim { get; set; }
 
         public AplicationUser GuestUser { get; set; }
 
+        public IdentityUserClaim<string> GuestUserClaim { get; set; }
+
         public AplicationUser AdminUser { get; set; }
+
+        public IdentityUserClaim<string> AdminUserClaim { get; set; }
 
         public Agent Agent { get; set; }
 
@@ -51,9 +57,17 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
                 NormalizedUserName = "agent@mail.com",
                 Email = "agent@mail.com",
                 NormalizedEmail = "agent@mail.com",
-                FirstName="Agent",
-                LastName="Agentov"
+                FirstName = "Agent",
+                LastName = "Agentov"
             };
+
+            //AgentUserClaim = new IdentityUserClaim<string>()
+            //{
+            //    Id = 1,
+            //    ClaimType = UserFullNameClaim,
+            //    ClaimValue = "Agent Agentov",
+            //    UserId = AgentUser.Id
+            //};
 
             AgentUser.PasswordHash =
                  hasher.HashPassword(AgentUser, "agent123");
@@ -68,8 +82,17 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
                 FirstName = "Guest",
                 LastName = "Guestov"
             };
+
+            //GuestUserClaim = new IdentityUserClaim<string>()
+            //{
+            //    Id = 2,
+            //    ClaimType = UserFullNameClaim,
+            //    ClaimValue = "Guest Guestov",
+            //    UserId = GuestUser.Id
+            //};
+
             GuestUser.PasswordHash =
-           hasher.HashPassword(AgentUser, "guest123");
+            hasher.HashPassword(AgentUser, "guest123");
 
             AdminUser = new AplicationUser()
             {
@@ -81,6 +104,14 @@ namespace RentingHouseSystem.Infrastructure.Data.SeedDb
                 FirstName = "Great",
                 LastName = "Admin"
             };
+
+            //AdminUserClaim = new IdentityUserClaim<string>()
+            //{
+            //    Id = 3,
+            //    ClaimType = UserFullNameClaim,
+            //    ClaimValue = "Great Admin",
+            //    UserId = AdminUser.Id
+            //};
 
             AdminUser.PasswordHash =
             hasher.HashPassword(AdminUser, "admin123");

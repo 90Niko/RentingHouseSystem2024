@@ -48,8 +48,14 @@ namespace RentingHouseSystem.Infrastructure.Data.Models
         [Comment("User id of the renterer")]
         public string? RenterId { get; set; }
 
+        [Comment("Is approved by the admin")]
+        public bool IsApproved { get; set; }
+
         public Category Category { get; set; } = null!;
 
         public Agent Agent { get; set; } = null!;
+
+        [ForeignKey(nameof(RenterId))]
+        public AplicationUser? Renter { get; set; } = null!;
     }
 }

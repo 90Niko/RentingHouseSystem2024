@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using RentingHouseSystem.Infrastructure.Data.Models;
-using static RentingHouseSystem.Core.Constants.RoleConstants;
+using static RentingHouseSystem.Core.Constants.AdministratorConstants;
 
 namespace RentingHouseSystem.Areas.Identity.Pages.Account
 {

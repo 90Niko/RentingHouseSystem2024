@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentingHouseSystem.Core.Constants
+namespace RentingHouseSystem.Infrastructure.Constants
 {
     public static class CustomClaims
     {

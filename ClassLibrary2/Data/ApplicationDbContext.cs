@@ -30,7 +30,7 @@ namespace RentingHouseSystem
             builder.ApplyConfiguration(new AgentConfig());
             builder.ApplyConfiguration(new CategoryConfig());
             builder.ApplyConfiguration(new HouseConfig());
-
+       
             base.OnModelCreating(builder);
         }
 
@@ -38,6 +38,6 @@ namespace RentingHouseSystem
 
         public DbSet<Category> Categories { get; set; } = null!;
 
-        public  DbSet<House> Houses { get; set; } = null!;
+        public DbSet<House> Houses { get; set; } = null!;
     }
 }

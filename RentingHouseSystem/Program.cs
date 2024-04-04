@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RentingHouseSystem.Core.Contracts.Agent;
 using RentingHouseSystem.Core.Contracts.House;
+using RentingHouseSystem.Core.Contracts.User;
 using RentingHouseSystem.Core.Services.Agent;
 using RentingHouseSystem.Core.Services.House;
+using RentingHouseSystem.Core.Services.User;
 using RentingHouseSystem.Infrastructure.Data.Comman;
 using RentingHouseSystem.Infrastructure.Data.Models;
 using RentingHouseSystem.ModelBinders;
-using RentingHouseSystem;
 
 namespace RentingHouseSystem
 {
@@ -49,6 +50,8 @@ namespace RentingHouseSystem
             builder.Services.AddScoped<IRepository, Repository>();
             builder.Services.AddScoped<IAgentService, AgentService>();
             builder.Services.AddScoped<IStatisticService, StatisticService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IRentService, RentService>();
 
             var app = builder.Build();
 

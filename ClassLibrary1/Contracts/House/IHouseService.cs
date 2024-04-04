@@ -17,13 +17,13 @@ namespace RentingHouseSystem.Core.Contracts.House
         Task<bool> CategoryExistAsync(int categoryId);
 
         Task<int> CreateAsync(HouseFormModel model, int agentId);
-        
+
         Task<HouseQueryServiceModel> AllAsync(
             string? category = null,
             string? searchTerm = null,
             HouseSorting sorting = HouseSorting.Newest,
             int currentPage = 1,
-            int housesPerPage =1);
+            int housesPerPage = 1);
 
         Task<IEnumerable<string>> AllCategoryNamesAsync();
 
@@ -37,7 +37,7 @@ namespace RentingHouseSystem.Core.Contracts.House
 
         Task EditAsync(int houseId, HouseFormModel model);
 
-        Task<bool> HasAgentWithIdAsync(int houseId,string userId);
+        Task<bool> HasAgentWithIdAsync(int houseId, string userId);
 
         Task<HouseFormModel> GetHouseFormModelByIdAsync(int id);
 
@@ -45,10 +45,14 @@ namespace RentingHouseSystem.Core.Contracts.House
 
         Task<bool> IsRentedAsync(int houseId);
 
-        Task<bool> IsRentedByUserWithIdAsync(int houseId,string userId);
+        Task<bool> IsRentedByUserWithIdAsync(int houseId, string userId);
 
         Task RentAsync(int id, string userId);
 
-        Task LeaveAsync(int houseId,string userId);
+        Task LeaveAsync(int houseId, string userId);
+
+       Task<IEnumerable<HouseServiceModel>> GetUnApprovedAsync();
+
+        Task ApprovedHouseAsync(int houseId);
     }
 }
